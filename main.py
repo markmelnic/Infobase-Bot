@@ -1,3 +1,5 @@
+from infobase import *
+
 import logging
 import configparser as cfg
 from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
@@ -37,7 +39,9 @@ def search(update: Update, context: CallbackContext) -> None:
     LOGGER.info("[USER: %s] - [Entity keyword(s): %s]" % (update.message.from_user.username, INQUIRY['entity']))
 
     update.message.reply_text('Searching, please wait...')
-    update.message.reply_text('Found, here is the data %s' % INQUIRY)
+
+    explorer = Explorer(INQUIRY['entity'])
+    update.message.reply_text('Found, here is the data %s' % explorer.results)
     return SEARCH
 
 def cancel(update: Update, context: CallbackContext) -> int:
